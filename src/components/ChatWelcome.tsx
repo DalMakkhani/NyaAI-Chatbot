@@ -34,12 +34,6 @@ const ChatWelcome = ({ onStartChat }: ChatWelcomeProps) => {
           </div>
           
           <div className="space-y-4 text-lg text-foreground/90 leading-relaxed">
-            <p className="font-medium">🤖⚖️ NyaAI – Your Friendly Legal Assistant</p>
-            <div className="space-y-2 text-base">
-              <p>Lost your wallet and police isn't cooperating?</p>
-              <p>Not sure how to respond to a legal notice?</p>
-              <p>Need help understanding an affidavit or property paper?</p>
-            </div>
             <p className="font-medium text-primary">
               I'm here to help — in simple words and in your language.
             </p>
@@ -52,19 +46,31 @@ const ChatWelcome = ({ onStartChat }: ChatWelcomeProps) => {
         {/* Chat Input */}
         <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
           <div className="glass rounded-2xl p-2">
-            <div className="flex gap-3">
-              <input
-                type="text"
+            <div className="flex gap-3 items-end">
+              <textarea
                 name="message"
                 placeholder="Ask me anything about law, documents, or your rights…"
-                className="flex-1 bg-transparent border-0 px-6 py-4 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-0"
+                className="flex-1 bg-transparent border-0 px-6 py-4 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-0 resize-none min-h-[56px] max-h-32"
                 autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    e.currentTarget.form?.requestSubmit();
+                  }
+                }}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = 'auto';
+                  target.style.height = Math.min(target.scrollHeight, 128) + 'px';
+                }}
               />
               <button
                 type="submit"
-                className="px-8 py-4 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl font-medium transition-colors"
+                className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-colors flex-shrink-0"
               >
-                Ask
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
               </button>
             </div>
           </div>

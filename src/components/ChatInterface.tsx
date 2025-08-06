@@ -64,12 +64,19 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
         { role: "user", content: userMessage }
       ];
 
-      const response = await fetch('/functions/v1/chat', {
+      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer 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`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 1024,
+          stream: false,
+        }),
       });
 
       if (!response.ok) {
@@ -77,7 +84,7 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
       }
 
       const data = await response.json();
-      return data.response;
+      return data.choices[0].message.content;
     } catch (error) {
       console.error('Error calling Groq API:', error);
       throw error;
@@ -261,10 +268,10 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={language === 'english' 
+                placeholder={messages.length === 0 ? (language === 'english' 
                   ? "Ask about Indian law, documents, or your rights..." 
                   : "भारतीय कानून, दस्तावेज़ या अपने अधिकारों के बारे में पूछें..."
-                }
+                ) : (language === 'english' ? "Type your message..." : "अपना संदेश लिखें...")}
                 className="w-full bg-transparent border-0 px-4 py-3 placeholder:text-muted-foreground focus:outline-none focus:ring-0"
                 disabled={isLoading}
               />
@@ -275,7 +282,9 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
               disabled={!input.trim() || isLoading}
               className="p-3 bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-primary-foreground rounded-xl transition-colors"
             >
-              <Send className="h-5 w-5" />
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
             </button>
           </form>
         </div>
