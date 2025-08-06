@@ -1,12 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import ChatWelcome from "@/components/ChatWelcome";
+import ChatInterface from "@/components/ChatInterface";
 
 const Index = () => {
+  const [chatStarted, setChatStarted] = useState(false);
+  const [initialMessage, setInitialMessage] = useState("");
+
+  const handleStartChat = (message: string) => {
+    setInitialMessage(message);
+    setChatStarted(true);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      {!chatStarted ? (
+        <ChatWelcome onStartChat={handleStartChat} />
+      ) : (
+        <ChatInterface initialMessage={initialMessage} />
+      )}
     </div>
   );
 };
