@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Bot, User } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface ChatMessageProps {
   message: {
@@ -61,8 +62,24 @@ const ChatMessage = ({ message, isTyping = false }: ChatMessageProps) => {
             ? 'chat-bubble-user rounded-br-md' 
             : 'chat-bubble-bot rounded-bl-md'
         }`}>
-          <div className="whitespace-pre-wrap leading-relaxed">
-            {displayedContent}
+          <div className="leading-relaxed">
+            {message.role === 'assistant' ? (
+              <div className="prose prose-sm max-w-none dark:prose-invert prose-p:my-2 prose-ul:my-2 prose-ol:my-2 prose-li:my-1">
+                <ReactMarkdown 
+                  components={{
+                    p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                    strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                    ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
+                    ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                    li: ({ children }) => <li className="text-sm">{children}</li>,
+                  }}
+                >
+                  {displayedContent}
+                </ReactMarkdown>
+              </div>
+            ) : (
+              <div className="whitespace-pre-wrap">{displayedContent}</div>
+            )}
             {showCursor && <span className="typewriter">|</span>}
           </div>
         </div>

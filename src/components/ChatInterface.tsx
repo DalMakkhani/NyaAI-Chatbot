@@ -180,9 +180,9 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="glass border-b border-border/50 p-4">
+    <div className="h-screen flex flex-col">
+      {/* Header - Fixed */}
+      <header className="glass border-b border-border/50 p-4 flex-shrink-0">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold text-primary">NyaAI</h1>
@@ -211,7 +211,7 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
         </div>
       </header>
 
-      {/* Messages */}
+      {/* Messages - Scrollable */}
       <main className="flex-1 overflow-y-auto chat-scroll p-4">
         <div className="max-w-4xl mx-auto space-y-4">
           {messages.map((message) => (
@@ -237,8 +237,8 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
         </div>
       </main>
 
-      {/* Input */}
-      <footer className="glass border-t border-border/50 p-4">
+      {/* Input - Fixed */}
+      <footer className="glass border-t border-border/50 p-4 flex-shrink-0">
         <div className="max-w-4xl mx-auto">
           <form
             onSubmit={(e) => {
