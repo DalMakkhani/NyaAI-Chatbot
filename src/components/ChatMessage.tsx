@@ -14,12 +14,10 @@ interface ChatMessageProps {
 
 const ChatMessage = ({ message, isTyping = false }: ChatMessageProps) => {
   const [displayedContent, setDisplayedContent] = useState('');
-  const [showCursor, setShowCursor] = useState(false);
 
   useEffect(() => {
     if (message.role === 'assistant' && isTyping) {
       setDisplayedContent('');
-      setShowCursor(true);
       let i = 0;
       const text = message.content;
       
@@ -28,7 +26,6 @@ const ChatMessage = ({ message, isTyping = false }: ChatMessageProps) => {
           setDisplayedContent(text.slice(0, i + 1));
           i++;
         } else {
-          setShowCursor(false);
           clearInterval(typeTimer);
         }
       }, 20);
@@ -36,7 +33,6 @@ const ChatMessage = ({ message, isTyping = false }: ChatMessageProps) => {
       return () => clearInterval(typeTimer);
     } else {
       setDisplayedContent(message.content);
-      setShowCursor(false);
     }
   }, [message.content, message.role, isTyping]);
 
@@ -80,7 +76,6 @@ const ChatMessage = ({ message, isTyping = false }: ChatMessageProps) => {
             ) : (
               <div className="whitespace-pre-wrap">{displayedContent}</div>
             )}
-            {showCursor && <span className="typewriter">|</span>}
           </div>
         </div>
         
