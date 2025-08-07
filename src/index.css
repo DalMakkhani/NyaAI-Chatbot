@@ -202,4 +202,14 @@
   .chat-scroll::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--ring));
   }
+
+  /* Hide scrollbars */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -45,12 +45,13 @@ const ChatWelcome = ({ onStartChat }: ChatWelcomeProps) => {
 
         {/* Chat Input */}
         <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-          <div className="glass rounded-2xl p-2">
-            <div className="flex gap-3 items-end">
+          <div className="glass rounded-2xl p-1">
+            <div className="flex gap-2 items-end">
               <textarea
                 name="message"
                 placeholder="Ask me anything about law, documents, or your rights…"
-                className="flex-1 bg-transparent border-0 px-6 py-4 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-0 resize-none min-h-[56px] max-h-32"
+                className="flex-1 bg-transparent border-0 px-5 py-4 text-lg placeholder:text-muted-foreground focus:outline-none focus:ring-0 resize-none min-h-[56px] max-h-32 scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
@@ -66,7 +67,7 @@ const ChatWelcome = ({ onStartChat }: ChatWelcomeProps) => {
               />
               <button
                 type="submit"
-                className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-colors flex-shrink-0"
+                className="p-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl transition-colors flex-shrink-0 m-1"
               >
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14m-7-7l7 7-7 7" />

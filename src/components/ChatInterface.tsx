@@ -264,16 +264,28 @@ Maintain a helpful, professional, and conversational tone throughout the chat.`;
             </button>
             
             <div className="flex-1 glass rounded-xl">
-              <input
-                type="text"
+              <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={messages.length === 0 ? (language === 'english' 
                   ? "Ask about Indian law, documents, or your rights..." 
                   : "भारतीय कानून, दस्तावेज़ या अपने अधिकारों के बारे में पूछें..."
                 ) : (language === 'english' ? "Type your message..." : "अपना संदेश लिखें...")}
-                className="w-full bg-transparent border-0 px-4 py-3 placeholder:text-muted-foreground focus:outline-none focus:ring-0"
+                className="w-full bg-transparent border-0 px-4 py-3 placeholder:text-muted-foreground focus:outline-none focus:ring-0 resize-none min-h-[48px] max-h-32 scrollbar-hide"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 disabled={isLoading}
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }
+                }}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = 'auto';
+                  target.style.height = Math.min(target.scrollHeight, 128) + 'px';
+                }}
               />
             </div>
             
