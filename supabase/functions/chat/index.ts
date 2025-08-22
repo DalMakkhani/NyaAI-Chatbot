@@ -17,7 +17,7 @@ serve(async (req) => {
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer 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`,
+        'Authorization': `Bearer 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`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
